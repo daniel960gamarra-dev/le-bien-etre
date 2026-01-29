@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi production orale 9e : Réseaux Sociaux & Bien-être</title>
+    
+    <!-- Tailwind CSS pour le style moderne -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Police Google Fonts (Poppins pour un look moderne et lisible) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Librairie pour les icônes (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Librairie pour la capture d'écran (html2canvas) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8; /* Gris-bleu très clair */
+        }
+        
+        .tab-active {
+            border-bottom: 3px solid #3b82f6;
+            color: #1d4ed8;
+            background-color: #eff6ff;
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        /* Animation douce pour les changements d'onglets */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .recorder-active {
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- En-tête -->
+    <header class="gradient-header text-white p-6 shadow-lg">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-2xl md:text-3xl font-bold mb-2">Suivi production orale 9e</h1>
+            <h2 class="text-lg md:text-xl font-light italic">🎥 « Réseaux Sociaux & Bien-être : Mon Bilan »</h2>
+        </div>
+    </header>
+
+    <!-- Navigation Onglets -->
+    <nav class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto flex">
+            <button onclick="switchTab('prep')" id="tab-prep-btn" class="flex-1 py-4 text-center font-medium hover:bg-slate-50 transition-colors tab-active flex items-center justify-center gap-2">
+                <i class="ph ph-pencil-simple text-xl"></i>
+                1. Préparation
+            </button>
+            <button onclick="switchTab('record')" id="tab-record-btn" class="flex-1 py-4 text-center font-medium hover:bg-slate-50 transition-colors text-slate-500 flex items-center justify-center gap-2">
+                <i class="ph ph-video-camera text-xl"></i>
+                2. Enregistrement & Bilan
+            </button>
+        </div>
+    </nav>
+
+    <!-- Contenu Principal -->
+    <main class="flex-grow p-4 md:p-8">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- ONGLET 1 : PRÉPARATION -->
+            <section id="tab-prep" class="fade-in">
+                
+                <!-- Consigne Générale -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg shadow-sm mb-8">
+                    <div class="flex items-start gap-4">
+                        <i class="ph ph-info text-3xl text-blue-600"></i>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-800 mb-2">Consigne générale</h3>
+                            <p class="text-blue-900">
+                                Tu dois réaliser une vidéo de <strong>3 minutes</strong> pour analyser ton rapport au monde numérique et proposer des solutions concrètes pour garder un esprit sain et équilibré face aux réseaux sociaux.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulaire de Questions -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 bg-slate-800 text-white flex items-center gap-2">
+                        <i class="ph ph-list-checks text-2xl"></i>
+                        <h3 class="font-semibold text-lg">Questions de préparation</h3>
+                    </div>
+                    
+                    <div class="p-6 space-y-8">
+                        <!-- Question 1 -->
+                        <div class="question-block">
+                            <label class="block font-semibold text-slate-700 mb-2 text-lg">
+                                1. Quel est ton réseau social préféré et pourquoi est-il le meilleur (ou le pire) par rapport aux autres ?
+                            </label>
+                            <textarea id="q1" class="w-full p-4 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:ring-0 transition-colors h-32 text-slate-700" placeholder="Écris ta réponse ici..."></textarea>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="question-block">
+                            <label class="block font-semibold text-slate-700 mb-2 text-lg">
+                                2. Penses-tu passer trop de temps sur ton téléphone ? Est-ce que cela a déjà affecté ta santé mentale ou tes émotions ?
+                            </label>
+                            <textarea id="q2" class="w-full p-4 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:ring-0 transition-colors h-32 text-slate-700" placeholder="Raconte ton expérience..."></textarea>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="question-block">
+                            <label class="block font-semibold text-slate-700 mb-2 text-lg">
+                                3. Pense au temps que tu passes sur les réseaux sociaux. Lesquels utilises-tu le plus et pourquoi faire ?
+                            </label>
+                            <textarea id="q3" class="w-full p-4 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:ring-0 transition-colors h-32 text-slate-700" placeholder="Explique tes habitudes..."></textarea>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="question-block">
+                            <label class="block font-semibold text-slate-700 mb-2 text-lg">
+                                4. Raconte une période de ta vie ou une anecdote (la tienne ou celle d’un ami) liée aux réseaux sociaux.
+                            </label>
+                            <textarea id="q4" class="w-full p-4 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:ring-0 transition-colors h-32 text-slate-700" placeholder="Ton anecdote ici..."></textarea>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="question-block">
+                            <label class="block font-semibold text-slate-700 mb-2 text-lg">
+                                5. Propose au moins 5 stratégies ou activités concrètes pour ne pas devenir « accro » et pour rester déconnecté.
+                            </label>
+                            <textarea id="q5" class="w-full p-4 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:ring-0 transition-colors h-40 text-slate-700" placeholder="- Stratégie 1&#10;- Stratégie 2..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Bouton Sauvegarder -->
+                    <div class="p-6 bg-slate-50 border-t border-slate-100 flex justify-end">
+                        <button onclick="saveAndSwitch()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition hover:scale-105 flex items-center gap-2">
+                            <i class="ph ph-floppy-disk text-xl"></i>
+                            Sauvegarder mes réponses
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ONGLET 2 : ENREGISTREMENT -->
+            <section id="tab-record" class="hidden fade-in space-y-8">
+                
+                <!-- Zone Récapitulatif (Cible pour capture d'écran) -->
+                <div id="recap-container" class="bg-white rounded-xl shadow-md p-8 border border-slate-200">
+                    <div class="text-center mb-8 border-b pb-6">
+                        <h2 class="text-2xl font-bold text-slate-800">Fiche de préparation</h2>
+                        <p class="text-slate-500">Réseaux Sociaux & Bien-être</p>
+                    </div>
+
+                    <!-- Identité -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-500 uppercase mb-1">Nom</label>
+                            <input type="text" id="student-lastname" class="w-full p-3 bg-slate-50 border border-slate-300 rounded text-slate-800 font-semibold" placeholder="Entre ton nom">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-500 uppercase mb-1">Prénom</label>
+                            <input type="text" id="student-firstname" class="w-full p-3 bg-slate-50 border border-slate-300 rounded text-slate-800 font-semibold" placeholder="Entre ton prénom">
+                        </div>
+                    </div>
+
+                    <!-- Réponses en lecture seule -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-blue-600 mb-2">1. Réseau préféré & Avis</h4>
+                            <p id="ans-1" class="text-slate-700 whitespace-pre-wrap italic">Aucune réponse...</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-blue-600 mb-2">2. Temps d'écran & Santé mentale</h4>
+                            <p id="ans-2" class="text-slate-700 whitespace-pre-wrap italic">Aucune réponse...</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-blue-600 mb-2">3. Usages principaux</h4>
+                            <p id="ans-3" class="text-slate-700 whitespace-pre-wrap italic">Aucune réponse...</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-blue-600 mb-2">4. Anecdote personnelle</h4>
+                            <p id="ans-4" class="text-slate-700 whitespace-pre-wrap italic">Aucune réponse...</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                            <h4 class="font-bold text-blue-600 mb-2">5. Stratégies de déconnexion</h4>
+                            <p id="ans-5" class="text-slate-700 whitespace-pre-wrap italic">Aucune réponse...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton Télécharger Image -->
+                <div class="flex justify-center">
+                    <button onclick="downloadImage()" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-md flex items-center gap-2 transition-colors">
+                        <i class="ph ph-camera text-xl"></i>
+                        Télécharger mes réponses en image
+                    </button>
+                </div>
+
+                <hr class="border-slate-300">
+
+                <!-- Section Enregistrement Vidéo -->
+                <div class="bg-slate-900 rounded-xl overflow-hidden shadow-xl text-white">
+                    <div class="p-4 bg-black/30 flex justify-between items-center">
+                        <h3 class="font-semibold flex items-center gap-2">
+                            <i class="ph ph-video text-red-500"></i> Studio d'enregistrement
+                        </h3>
+                        <!-- Chronomètre -->
+                        <div id="timer" class="font-mono text-2xl font-bold text-red-400 bg-black/50 px-3 py-1 rounded">00:00</div>
+                    </div>
+
+                    <!-- Zone de prévisualisation vidéo -->
+                    <div class="relative bg-black aspect-video flex items-center justify-center group">
+                        <video id="video-preview" class="w-full h-full object-cover transform scale-x-[-1]" autoplay muted playsinline></video>
+                        <div id="placeholder-msg" class="absolute text-slate-400 text-center p-4">
+                            <i class="ph ph-webcam text-4xl mb-2 block mx-auto"></i>
+                            Clique sur "Démarrer" pour activer la caméra
+                        </div>
+                    </div>
+
+                    <!-- Contrôles -->
+                    <div class="p-6 flex flex-wrap justify-center gap-4 bg-slate-800">
+                        <button id="btn-start" onclick="startRecording()" class="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-play-circle text-2xl"></i> Démarrer
+                        </button>
+
+                        <button id="btn-pause" onclick="pauseRecording()" class="hidden bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-pause-circle text-2xl"></i> Pause
+                        </button>
+                        
+                        <button id="btn-stop" onclick="stopRecording()" class="hidden bg-slate-600 hover:bg-slate-700 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-stop-circle text-2xl"></i> Finir
+                        </button>
+
+                        <button id="btn-reset" onclick="resetRecording()" class="bg-white text-slate-900 hover:bg-slate-200 py-3 px-6 rounded-full font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-arrows-counter-clockwise text-2xl"></i> Refaire
+                        </button>
+                        
+                        <a id="btn-download" href="#" style="display:none;" class="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2 transition-all">
+                            <i class="ph ph-download-simple text-2xl"></i> Télécharger (.mp4)
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="h-12"></div> <!-- Spacer -->
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t p-6 text-center text-slate-500 text-sm">
+        <p>&copy; 2024 - Projet FLE 9e année - Usage pédagogique uniquement.</p>
+        <p class="text-xs mt-1">Les données sont enregistrées localement et disparaissent à la fermeture de la page.</p>
+    </footer>
+
+    <!-- Logique JavaScript -->
+    <script>
+        // --- GESTION DES ONGLETS & DONNÉES ---
+        
+        function switchTab(tabName) {
+            const tabPrep = document.getElementById('tab-prep');
+            const tabRecord = document.getElementById('tab-record');
+            const btnPrep = document.getElementById('tab-prep-btn');
+            const btnRecord = document.getElementById('tab-record-btn');
+
+            if (tabName === 'prep') {
+                tabPrep.classList.remove('hidden');
+                tabRecord.classList.add('hidden');
+                
+                btnPrep.classList.add('tab-active', 'text-blue-700', 'bg-blue-50');
+                btnPrep.classList.remove('text-slate-500');
+                
+                btnRecord.classList.remove('tab-active', 'text-blue-700', 'bg-blue-50');
+                btnRecord.classList.add('text-slate-500');
+            } else {
+                // Copier les données avant de changer
+                copyDataToRecap();
+                
+                tabPrep.classList.add('hidden');
+                tabRecord.classList.remove('hidden');
+                
+                btnRecord.classList.add('tab-active', 'text-blue-700', 'bg-blue-50');
+                btnRecord.classList.remove('text-slate-500');
+                
+                btnPrep.classList.remove('tab-active', 'text-blue-700', 'bg-blue-50');
+                btnPrep.classList.add('text-slate-500');
+            }
+        }
+
+        function copyDataToRecap() {
+            // Transfert des réponses des textareas vers les paragraphes de l'onglet 2
+            for (let i = 1; i <= 5; i++) {
+                const inputVal = document.getElementById(`q${i}`).value;
+                const outputEl = document.getElementById(`ans-${i}`);
+                
+                if (inputVal.trim() !== "") {
+                    outputEl.textContent = inputVal;
+                    outputEl.classList.remove('italic', 'text-slate-400');
+                } else {
+                    outputEl.textContent = "Aucune réponse fournie.";
+                    outputEl.classList.add('italic', 'text-slate-400');
+                }
+            }
+        }
+
+        function saveAndSwitch() {
+            // Effet visuel simple
+            const btn = document.querySelector('button[onclick="saveAndSwitch()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-check-circle text-xl"></i> Sauvegardé !';
+            
+            setTimeout(() => {
+                switchTab('record');
+                btn.innerHTML = originalText;
+                window.scrollTo(0, 0); // Remonter en haut de la page
+            }, 800);
+        }
+
+        // --- EXPORT IMAGE (HTML2CANVAS) ---
+
+        function downloadImage() {
+            const element = document.getElementById('recap-container');
+            const name = document.getElementById('student-lastname').value || 'Eleve';
+            const firstname = document.getElementById('student-firstname').value || 'Anonyme';
+            
+            // Validation simple
+            if(name === 'Eleve' && firstname === 'Anonyme') {
+                if(!confirm("Tu n'as pas rempli ton nom et prénom. Veux-tu continuer quand même ?")) return;
+            }
+
+            html2canvas(element, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Bilan_Reseaux_${name}_${firstname}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+
+        // --- ENREGISTREMENT VIDÉO ---
+
+        let mediaRecorder;
+        let recordedChunks = [];
+        let timerInterval;
+        let seconds = 0;
+        let stream;
+
+        const videoPreview = document.getElementById('video-preview');
+        const placeholderMsg = document.getElementById('placeholder-msg');
+        const timerDisplay = document.getElementById('timer');
+        const btnStart = document.getElementById('btn-start');
+        const btnPause = document.getElementById('btn-pause');
+        const btnStop = document.getElementById('btn-stop');
+        const btnDownload = document.getElementById('btn-download');
+
+        async function initCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                videoPreview.srcObject = stream;
+                placeholderMsg.style.display = 'none';
+                return true;
+            } catch (err) {
+                console.error("Erreur accès caméra:", err);
+                alert("Impossible d'accéder à la caméra ou au micro. Vérifie tes permissions.");
+                return false;
+            }
+        }
+
+        async function startRecording() {
+            if (!stream) {
+                const success = await initCamera();
+                if (!success) return;
+            }
+
+            recordedChunks = [];
+            
+            // Configuration compatible avec la plupart des navigateurs
+            const options = { mimeType: 'video/webm;codecs=vp9' };
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                delete options.mimeType; // Fallback navigateur par défaut
+            }
+
+            mediaRecorder = new MediaRecorder(stream, options);
+
+            mediaRecorder.ondataavailable = event => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+                const url = URL.createObjectURL(blob);
+                
+                // Configurer le bouton de téléchargement
+                const name = document.getElementById('student-lastname').value || 'Eleve';
+                btnDownload.href = url;
+                btnDownload.download = `Production_Orale_${name}.mp4`;
+                btnDownload.style.display = "flex";
+                
+                // Mettre la vidéo en replay dans l'aperçu (optionnel, ici on garde le flux caméra)
+                // videoPreview.srcObject = null;
+                // videoPreview.src = url;
+                // videoPreview.controls = true;
+            };
+
+            mediaRecorder.start();
+            startTimer();
+
+            // UI Updates
+            btnStart.classList.add('hidden');
+            btnPause.classList.remove('hidden');
+            btnStop.classList.remove('hidden');
+            btnDownload.style.display = 'none';
+            videoPreview.parentElement.classList.add('recorder-active');
+        }
+
+        function pauseRecording() {
+            if (mediaRecorder.state === "recording") {
+                mediaRecorder.pause();
+                stopTimer();
+                btnPause.innerHTML = '<i class="ph ph-play-circle text-2xl"></i> Reprendre';
+                btnPause.classList.replace('bg-amber-500', 'bg-blue-500');
+                btnPause.classList.replace('hover:bg-amber-600', 'hover:bg-blue-600');
+            } else if (mediaRecorder.state === "paused") {
+                mediaRecorder.resume();
+                startTimer();
+                btnPause.innerHTML = '<i class="ph ph-pause-circle text-2xl"></i> Pause';
+                btnPause.classList.replace('bg-blue-500', 'bg-amber-500');
+                btnPause.classList.replace('hover:bg-blue-600', 'hover:bg-amber-600');
+            }
+        }
+
+        function stopRecording() {
+            mediaRecorder.stop();
+            stopTimer();
+            stream.getTracks().forEach(track => track.stop()); // Éteindre la caméra light
+            stream = null; // Reset stream pour forcer re-demande si on refait
+
+            // UI Updates
+            btnPause.classList.add('hidden');
+            btnStop.classList.add('hidden');
+            videoPreview.parentElement.classList.remove('recorder-active');
+        }
+
+        function resetRecording() {
+            if (mediaRecorder && mediaRecorder.state !== "inactive") {
+                mediaRecorder.stop();
+            }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            
+            recordedChunks = [];
+            stopTimer();
+            seconds = 0;
+            updateTimerDisplay();
+
+            // UI Reset
+            videoPreview.srcObject = null;
+            placeholderMsg.style.display = 'block';
+            btnStart.classList.remove('hidden');
+            btnPause.classList.add('hidden');
+            btnStop.classList.add('hidden');
+            btnDownload.style.display = 'none';
+            videoPreview.parentElement.classList.remove('recorder-active');
+            
+            // Remettre bouton pause à l'état initial
+            btnPause.innerHTML = '<i class="ph ph-pause-circle text-2xl"></i> Pause';
+            btnPause.classList.replace('bg-blue-500', 'bg-amber-500');
+        }
+
+        // --- TIMER ---
+        
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                seconds++;
+                updateTimerDisplay();
+                
+                // Alerte visuelle à 3 minutes (180 secondes)
+                if (seconds >= 180) {
+                    timerDisplay.classList.add('text-red-600', 'bg-red-100');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timerDisplay.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+    </script>
+</body>
+</html>
